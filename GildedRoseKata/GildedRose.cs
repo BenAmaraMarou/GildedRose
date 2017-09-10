@@ -80,17 +80,8 @@ namespace GildedRoseKata
                 {
                     DecreaseSellIn(item);
                 }
-            }
 
-            if (item.SellIn < 0)
-            {
-                if (item.Name == AgedBrie)
-                {
-                }
-                else if (item.Name == BackstagePass)
-                {
-                }
-                else//Sulfuras and Other
+                if (item.SellIn < 0)
                 {
                     if (item.Quality > 0)
                     {
