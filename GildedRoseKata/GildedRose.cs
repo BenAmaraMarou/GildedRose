@@ -33,29 +33,31 @@ namespace GildedRoseKata
                     WinQuality(item);
                 }
                 DecreaseSellIn(item);
+                if (item.SellIn < 0)
+                {
+                    if (IsMaxQualityNotReached(item))
+                    {
+                        WinQuality(item);
+                    }
+                }
             }
             else if (item.Name == BackstagePass)
             {
                 if (IsMaxQualityNotReached(item))
                 {
                     WinQuality(item);
-
-                    if (item.Name == BackstagePass)
+                    if (item.SellIn < 11)
                     {
-                        if (item.SellIn < 11)
+                        if (IsMaxQualityNotReached(item))
                         {
-                            if (IsMaxQualityNotReached(item))
-                            {
-                                WinQuality(item);
-                            }
+                            WinQuality(item);
                         }
-
-                        if (item.SellIn < 6)
+                    }
+                    if (item.SellIn < 6)
+                    {
+                        if (IsMaxQualityNotReached(item))
                         {
-                            if (IsMaxQualityNotReached(item))
-                            {
-                                WinQuality(item);
-                            }
+                            WinQuality(item);
                         }
                     }
                 }
@@ -80,25 +82,18 @@ namespace GildedRoseKata
             {
                 if (item.Name == AgedBrie)
                 {
-                    if (IsMaxQualityNotReached(item))
-                    {
-                        WinQuality(item);
-                    }
                 }
-                else
+                else if (item.Name == BackstagePass)
                 {
-                    if (item.Name == BackstagePass)
+                    item.Quality = 0;
+                }
+                else//Sulfuras and Other
+                {
+                    if (item.Quality > 0)
                     {
-                        item.Quality = 0;
-                    }
-                    else
-                    {
-                        if (item.Quality > 0)
+                        if (item.Name != Sulfuras)
                         {
-                            if (item.Name != Sulfuras)
-                            {
-                                DecreaseQuality(item);
-                            }
+                            DecreaseQuality(item);
                         }
                     }
                 }
