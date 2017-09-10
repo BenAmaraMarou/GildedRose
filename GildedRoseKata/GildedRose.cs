@@ -4,6 +4,11 @@ namespace GildedRoseKata
 {
     public class GildedRose
     {
+        private const string AgedBrie = "Aged Brie";
+        private const string BackstagePass = "Backstage passes to a TAFKAL80ETC concert";
+        private const string Sulfuras = "Sulfuras, Hand of Ragnaros";
+        private const int MaxQuality = 50;
+
         IList<Item> Items;
 
         public GildedRose(IList<Item> Items)
@@ -13,78 +18,125 @@ namespace GildedRoseKata
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
-                }
-                else
-                {
-                    if (Items[i].Quality < 50)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
+                UpdateSingle(item);
+            }
+        }
 
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
+        public void UpdateSingle(Item item)
+        {
+            if (item.Name == AgedBrie)
+            {
+                if (item.Quality < MaxQuality)
+                {
+                    WinQuality(item);
 
-                            if (Items[i].SellIn < 6)
+                    if (item.Name == BackstagePass)
+                    {
+                        if (item.SellIn < 11)
+                        {
+                            if (item.Quality < MaxQuality)
                             {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
+                                WinQuality(item);
                             }
                         }
-                    }
-                }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Name != "Aged Brie")
-                    {
-                        if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                        if (item.SellIn < 6)
                         {
-                            if (Items[i].Quality > 0)
+                            if (item.Quality < MaxQuality)
                             {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
+                                WinQuality(item);
                             }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
-                    }
-                    else
-                    {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
                         }
                     }
                 }
             }
+            else if (item.Name == BackstagePass)
+                {
+                    if (item.Quality < MaxQuality)
+                    {
+                        WinQuality(item);
+
+                        if (item.Name == BackstagePass)
+                        {
+                            if (item.SellIn < 11)
+                            {
+                                if (item.Quality < MaxQuality)
+                                {
+                                    WinQuality(item);
+                                }
+                            }
+
+                            if (item.SellIn < 6)
+                            {
+                                if (item.Quality < MaxQuality)
+                                {
+                                    WinQuality(item);
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            else
+            {
+                if (item.Quality > 0)
+                {
+                    if (item.Name != Sulfuras)
+                    {
+                        DecreaseQuality(item);
+                    }
+                }
+            }
+
+            if (item.Name != Sulfuras)
+            {
+                DecreaseSellIn(item);
+            }
+
+            if (item.SellIn < 0)
+            {
+                if (item.Name != AgedBrie)
+                {
+                    if (item.Name != BackstagePass)
+                    {
+                        if (item.Quality > 0)
+                        {
+                            if (item.Name != Sulfuras)
+                            {
+                                DecreaseQuality(item);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        item.Quality = 0;
+                    }
+                }
+                else
+                {
+                    if (item.Quality < MaxQuality)
+                    {
+                        WinQuality(item);
+                    }
+                }
+            }
+        }
+
+        private static void WinQuality(Item item)
+        {
+            item.Quality = item.Quality + 1;
+        }
+
+        private static void DecreaseSellIn(Item item)
+        {
+            item.SellIn = item.SellIn - 1;
+        }
+
+        private static void DecreaseQuality(Item item)
+        {
+            item.Quality = item.Quality - 1;
         }
     }
 }
