@@ -32,6 +32,7 @@ namespace GildedRoseKata
                 {
                     WinQuality(item);
                 }
+                DecreaseSellIn(item);
             }
             else if (item.Name == BackstagePass)
             {
@@ -58,6 +59,7 @@ namespace GildedRoseKata
                         }
                     }
                 }
+                DecreaseSellIn(item);
             }
             else
             {
@@ -68,11 +70,10 @@ namespace GildedRoseKata
                         DecreaseQuality(item);
                     }
                 }
-            }
-
-            if (item.Name != Sulfuras)
-            {
-                DecreaseSellIn(item);
+                if (item.Name != Sulfuras)
+                {
+                    DecreaseSellIn(item);
+                }
             }
 
             if (item.SellIn < 0)
