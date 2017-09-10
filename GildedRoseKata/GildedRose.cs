@@ -62,8 +62,12 @@ namespace GildedRoseKata
                     }
                 }
                 DecreaseSellIn(item);
+                if (item.SellIn < 0)
+                {
+                    item.Quality = 0;
+                }
             }
-            else
+            else//Sulfuras Other
             {
                 if (item.Quality > 0)
                 {
@@ -85,7 +89,6 @@ namespace GildedRoseKata
                 }
                 else if (item.Name == BackstagePass)
                 {
-                    item.Quality = 0;
                 }
                 else//Sulfuras and Other
                 {
