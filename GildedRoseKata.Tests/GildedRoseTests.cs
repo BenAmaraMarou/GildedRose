@@ -9,6 +9,7 @@ namespace GildedRoseKata.Tests
         private const string OtherItem = "OtherItem";
         private const string Sulfuras = "Sulfuras, Hand of Ragnaros";
         private const string AgedBrie = "Aged Brie";
+        private const string BackstagePass = "Backstage passes to a TAFKAL80ETC concert";
         private const int MaxQuality = 50;
 
         [Test]
@@ -75,6 +76,16 @@ namespace GildedRoseKata.Tests
             var gildedRose = new GildedRose(null);
             gildedRose.UpdateSingle(item);
             Assert.AreEqual(3, item.Quality);
+            Assert.AreEqual(-1, item.SellIn);
+        }
+
+        [Test]
+        public void BackStagePass_Loose_All_Quality_When_MaxQuality_And_SellIn_Are_Reached()
+        {
+            var item = new Item { Name = BackstagePass, Quality = MaxQuality, SellIn = 0 };
+            var gildedRose = new GildedRose(null);
+            gildedRose.UpdateSingle(item);
+            Assert.AreEqual(0, item.Quality);
             Assert.AreEqual(-1, item.SellIn);
         }
 

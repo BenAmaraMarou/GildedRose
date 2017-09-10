@@ -28,14 +28,14 @@ namespace GildedRoseKata
         {
             if (item.Name == AgedBrie)
             {
-                if (item.Quality < MaxQuality)
+                if (IsMaxQualityNotReached(item))
                 {
                     WinQuality(item);
                 }
             }
             else if (item.Name == BackstagePass)
             {
-                if (item.Quality < MaxQuality)
+                if (IsMaxQualityNotReached(item))
                 {
                     WinQuality(item);
 
@@ -43,7 +43,7 @@ namespace GildedRoseKata
                     {
                         if (item.SellIn < 11)
                         {
-                            if (item.Quality < MaxQuality)
+                            if (IsMaxQualityNotReached(item))
                             {
                                 WinQuality(item);
                             }
@@ -51,7 +51,7 @@ namespace GildedRoseKata
 
                         if (item.SellIn < 6)
                         {
-                            if (item.Quality < MaxQuality)
+                            if (IsMaxQualityNotReached(item))
                             {
                                 WinQuality(item);
                             }
@@ -79,14 +79,18 @@ namespace GildedRoseKata
             {
                 if (item.Name == AgedBrie)
                 {
-                    if (item.Quality < MaxQuality)
+                    if (IsMaxQualityNotReached(item))
                     {
                         WinQuality(item);
                     }
                 }
                 else
                 {
-                    if (item.Name != BackstagePass)
+                    if (item.Name == BackstagePass)
+                    {
+                        item.Quality = 0;
+                    }
+                    else
                     {
                         if (item.Quality > 0)
                         {
@@ -96,12 +100,13 @@ namespace GildedRoseKata
                             }
                         }
                     }
-                    else
-                    {
-                        item.Quality = 0;
-                    }
                 }
             }
+        }
+
+        private static bool IsMaxQualityNotReached(Item item)
+        {
+            return item.Quality < MaxQuality;
         }
 
         private static void WinQuality(Item item)
