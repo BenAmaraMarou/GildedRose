@@ -67,32 +67,26 @@ namespace GildedRoseKata
                     item.Quality = 0;
                 }
             }
-            else//Sulfuras Other
+            else if (item.Name == Sulfuras)
+            {
+            }
+            else//Other
             {
                 if (item.Quality > 0)
                 {
-                    if (item.Name != Sulfuras)
-                    {
-                        DecreaseQuality(item);
-                    }
+                    DecreaseQuality(item);
                 }
-                if (item.Name != Sulfuras)
-                {
-                    DecreaseSellIn(item);
-                }
-
+                DecreaseSellIn(item);
                 if (item.SellIn < 0)
                 {
                     if (item.Quality > 0)
                     {
-                        if (item.Name != Sulfuras)
-                        {
-                            DecreaseQuality(item);
-                        }
+                        DecreaseQuality(item);
                     }
                 }
             }
         }
+        
 
         private static bool IsMaxQualityNotReached(Item item)
         {
