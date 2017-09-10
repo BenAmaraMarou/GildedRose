@@ -13,7 +13,7 @@ namespace GildedRoseKata.Tests
         private const int MaxQuality = 50;
 
         [Test]
-        public void Should_Remain_Same_Quality_When_Other_Item_And_Quality_Is_0()
+        public void OtherItem_Should_Keep_Same_Quality_When_Quality_Is_0()
         {
             var item = new Item { Name = OtherItem, Quality = 0 };
             var gildedRose = new GildedRose(null);
@@ -22,63 +22,86 @@ namespace GildedRoseKata.Tests
         }
 
         [Test]
-        public void Should_Decrease_Quality_When_Other_Item_And_Quality_Is_Greater_Than_0()
+        public void OtherItem_Should_Decrease_Quality_When_Quality_Is_Greater_Than_0_And_SellIn_Is_Not_Reached()
         {
-            var item = new Item { Name = OtherItem, Quality = 1 };
+            var item = new Item { Name = OtherItem, Quality = 10, SellIn = 1 };
             var gildedRose = new GildedRose(null);
             gildedRose.UpdateSingle(item);
-            Assert.AreEqual(0, item.Quality);
+            Assert.AreEqual(9, item.Quality);
         }
 
         [Test]
-        public void Should_Decrease_SellIn_When_Other_Item()
+        public void OtherItem_Should_Double_Decrease_Quality_When_SellIn_Is_Reached()
         {
-            var item = new Item { Name = OtherItem, SellIn = 1 };
+            var item = new Item { Name = OtherItem, SellIn = 0, Quality = 10 };
             var gildedRose = new GildedRose(null);
             gildedRose.UpdateSingle(item);
-            Assert.AreEqual(0, item.SellIn);
+            Assert.AreEqual(8, item.Quality);
         }
 
         [Test]
-        public void Sulfuras_Remain_Same()
+        public void OtherItem_Should_Decrease_SellIn()
         {
-            var item = new Item { Name = Sulfuras, Quality = 1, SellIn = 1 };
+            var item = new Item { Name = OtherItem, SellIn = 10 };
             var gildedRose = new GildedRose(null);
             gildedRose.UpdateSingle(item);
-            Assert.AreEqual(1, item.Quality);
-            Assert.AreEqual(1, item.SellIn);
+            Assert.AreEqual(9, item.SellIn);
+        }
+        
+        [Test]
+        public void Sulfuras_Should_Keep_Same_Quality()
+        {
+            var item = new Item { Name = Sulfuras, Quality = 10};
+            var gildedRose = new GildedRose(null);
+            gildedRose.UpdateSingle(item);
+            Assert.AreEqual(10, item.Quality);
         }
 
         [Test]
-        public void AgedBrie_Win_Quality_And_Decrease_SellIn()
+        public void Sulfuras_Should_Keep_Same_SellIn()
         {
-            var item = new Item { Name = AgedBrie, Quality = 1, SellIn = 1};
+            var item = new Item { Name = Sulfuras, SellIn = 10 };
             var gildedRose = new GildedRose(null);
             gildedRose.UpdateSingle(item);
-            Assert.AreEqual(2, item.Quality);
-            Assert.AreEqual(0, item.SellIn);
+            Assert.AreEqual(10, item.SellIn);
         }
 
         [Test]
-        public void AgedBrie_Quality_Has_Max_Value()
+        public void AgedBrie_Should_Decrease_SellIn()
         {
-            var item = new Item { Name = AgedBrie, Quality = MaxQuality, SellIn = 1 };
+            var item = new Item { Name = AgedBrie, SellIn = 10 };
+            var gildedRose = new GildedRose(null);
+            gildedRose.UpdateSingle(item);
+            Assert.AreEqual(9, item.SellIn);
+        }
+
+        [Test]
+        public void AgedBrie_Should_Win_Quality_When_SellIn_Is_Not_Reached()
+        {
+            var item = new Item { Name = AgedBrie, Quality = 10, SellIn = 10};
+            var gildedRose = new GildedRose(null);
+            gildedRose.UpdateSingle(item);
+            Assert.AreEqual(11, item.Quality);
+        }
+
+        [Test]
+        public void AgedBrie_Should_Double_Win_Quality_When_SellIn_Is_Reached()
+        {
+            var item = new Item { Name = AgedBrie, Quality = 10, SellIn = 0 };
+            var gildedRose = new GildedRose(null);
+            gildedRose.UpdateSingle(item);
+            Assert.AreEqual(12, item.Quality);
+        }
+        
+        [Test]
+        public void AgedBrie_Quality_Should_Not_Exceed_MaxQuality()
+        {
+            var item = new Item { Name = AgedBrie, Quality = MaxQuality};
             var gildedRose = new GildedRose(null);
             gildedRose.UpdateSingle(item);
             Assert.AreEqual(MaxQuality, item.Quality);
-            Assert.AreEqual(0, item.SellIn);
         }
-
-        [Test]
-        public void AgedBrie_Double_Win_Quality_When_SellIn_Is_Reached()
-        {
-            var item = new Item { Name = AgedBrie, Quality = 1, SellIn = 0 };
-            var gildedRose = new GildedRose(null);
-            gildedRose.UpdateSingle(item);
-            Assert.AreEqual(3, item.Quality);
-            Assert.AreEqual(-1, item.SellIn);
-        }
-
+        
         [Test]
         public void BackStagePass_Loose_All_Quality_When_MaxQuality_And_SellIn_Are_Reached()
         {
@@ -88,8 +111,5 @@ namespace GildedRoseKata.Tests
             Assert.AreEqual(0, item.Quality);
             Assert.AreEqual(-1, item.SellIn);
         }
-
-
-
     }
 }
