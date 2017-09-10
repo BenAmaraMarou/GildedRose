@@ -31,6 +31,13 @@ namespace GildedRoseKata
                 if (item.Quality < MaxQuality)
                 {
                     WinQuality(item);
+                }
+            }
+            else if (item.Name == BackstagePass)
+            {
+                if (item.Quality < MaxQuality)
+                {
+                    WinQuality(item);
 
                     if (item.Name == BackstagePass)
                     {
@@ -52,33 +59,6 @@ namespace GildedRoseKata
                     }
                 }
             }
-            else if (item.Name == BackstagePass)
-                {
-                    if (item.Quality < MaxQuality)
-                    {
-                        WinQuality(item);
-
-                        if (item.Name == BackstagePass)
-                        {
-                            if (item.SellIn < 11)
-                            {
-                                if (item.Quality < MaxQuality)
-                                {
-                                    WinQuality(item);
-                                }
-                            }
-
-                            if (item.SellIn < 6)
-                            {
-                                if (item.Quality < MaxQuality)
-                                {
-                                    WinQuality(item);
-                                }
-                            }
-                        }
-                    }
-                }
-            
             else
             {
                 if (item.Quality > 0)
@@ -97,7 +77,14 @@ namespace GildedRoseKata
 
             if (item.SellIn < 0)
             {
-                if (item.Name != AgedBrie)
+                if (item.Name == AgedBrie)
+                {
+                    if (item.Quality < MaxQuality)
+                    {
+                        WinQuality(item);
+                    }
+                }
+                else
                 {
                     if (item.Name != BackstagePass)
                     {
@@ -112,13 +99,6 @@ namespace GildedRoseKata
                     else
                     {
                         item.Quality = 0;
-                    }
-                }
-                else
-                {
-                    if (item.Quality < MaxQuality)
-                    {
-                        WinQuality(item);
                     }
                 }
             }
