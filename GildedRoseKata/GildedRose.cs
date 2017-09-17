@@ -28,12 +28,50 @@ namespace GildedRoseKata
         {
             if (item.Name == AgedBrie)
             {
-                if (IsMaxQualityNotReached(item))
+                UpdateAgedBrie(item);
+            }
+            else if (item.Name == BackstagePass)
+            {
+                UpdateBackStagePass(item);
+            }
+            else if (item.Name == Sulfuras)
+            {
+            }
+            else//Other
+            {
+                UpdateOthers(item);
+            }
+        }
+
+        private static void UpdateOthers(Item item)
+        {
+            if (item.Quality > 0)
+            {
+                DecreaseQuality(item);
+            }
+            DecreaseSellIn(item);
+            if (item.SellIn < 0)
+            {
+                if (item.Quality > 0)
                 {
-                    WinQuality(item);
+                    DecreaseQuality(item);
                 }
-                DecreaseSellIn(item);
-                if (item.SellIn < 0)
+            }
+        }
+
+        private static void UpdateBackStagePass(Item item)
+        {
+            if (IsMaxQualityNotReached(item))
+            {
+                WinQuality(item);
+                if (item.SellIn < 11)
+                {
+                    if (IsMaxQualityNotReached(item))
+                    {
+                        WinQuality(item);
+                    }
+                }
+                if (item.SellIn < 6)
                 {
                     if (IsMaxQualityNotReached(item))
                     {
@@ -41,52 +79,28 @@ namespace GildedRoseKata
                     }
                 }
             }
-            else if (item.Name == BackstagePass)
+            DecreaseSellIn(item);
+            if (item.SellIn < 0)
+            {
+                item.Quality = 0;
+            }
+        }
+
+        private static void UpdateAgedBrie(Item item)
+        {
+            if (IsMaxQualityNotReached(item))
+            {
+                WinQuality(item);
+            }
+            DecreaseSellIn(item);
+            if (item.SellIn < 0)
             {
                 if (IsMaxQualityNotReached(item))
                 {
                     WinQuality(item);
-                    if (item.SellIn < 11)
-                    {
-                        if (IsMaxQualityNotReached(item))
-                        {
-                            WinQuality(item);
-                        }
-                    }
-                    if (item.SellIn < 6)
-                    {
-                        if (IsMaxQualityNotReached(item))
-                        {
-                            WinQuality(item);
-                        }
-                    }
-                }
-                DecreaseSellIn(item);
-                if (item.SellIn < 0)
-                {
-                    item.Quality = 0;
-                }
-            }
-            else if (item.Name == Sulfuras)
-            {
-            }
-            else//Other
-            {
-                if (item.Quality > 0)
-                {
-                    DecreaseQuality(item);
-                }
-                DecreaseSellIn(item);
-                if (item.SellIn < 0)
-                {
-                    if (item.Quality > 0)
-                    {
-                        DecreaseQuality(item);
-                    }
                 }
             }
         }
-        
 
         private static bool IsMaxQualityNotReached(Item item)
         {
