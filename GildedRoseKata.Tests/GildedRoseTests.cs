@@ -22,18 +22,18 @@ namespace GildedRoseKata.Tests
             Assert.AreEqual(inputQuality, item.Quality);
         }
 
-        [Test]
-        public void OtherItem_Should_Decrease_Quality_When_Quality_Is_Greater_Than_0_And_SellIn_Is_Not_Reached()
+        [TestCase(10, 10)]
+        [TestCase(1, 0)]
+        public void OtherItem_Should_Decrease_Quality_When_Quality_And_SellIn_Are_Not_Reached(int inputQuality, int inputSellIn)
         {
-            var inputQuality = 10;
-            var item = new Item { Name = OtherItem, Quality = inputQuality, SellIn = 1 };
+            var item = new Item { Name = OtherItem, Quality = inputQuality, SellIn = inputSellIn };
             var gildedRose = new GildedRose(null);
             gildedRose.UpdateSingle(item);
             Assert.AreEqual(inputQuality - 1, item.Quality);
         }
 
         [Test]
-        public void OtherItem_Should_Double_Decrease_Quality_When_SellIn_Is_Reached()
+        public void OtherItem_Should_Double_Decrease_Quality_When_SellIn_Is_Reached_But_Not_Quality()
         {
             var inputQuality = 10;
             var item = new Item { Name = OtherItem, SellIn = 0, Quality = inputQuality };

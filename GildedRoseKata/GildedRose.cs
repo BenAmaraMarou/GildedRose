@@ -8,7 +8,8 @@ namespace GildedRoseKata
         private const string BackstagePass = "Backstage passes to a TAFKAL80ETC concert";
         private const string Sulfuras = "Sulfuras, Hand of Ragnaros";
         private const int MaxQuality = 50;
-
+        private const int TwoWeeks = 11;
+        private const int OneWeek = 6;
         IList<Item> Items;
 
         public GildedRose(IList<Item> Items)
@@ -45,11 +46,11 @@ namespace GildedRoseKata
 
         private static void UpdateOthers(Item item)
         {
+            DecreaseSellIn(item);
             if (item.Quality > 0)
             {
                 DecreaseQuality(item);
             }
-            DecreaseSellIn(item);
             if (item.SellIn < 0)
             {
                 if (item.Quality > 0)
@@ -64,14 +65,14 @@ namespace GildedRoseKata
             if (IsMaxQualityNotReached(item))
             {
                 WinQuality(item);
-                if (item.SellIn < 11)
+                if (item.SellIn < TwoWeeks)
                 {
                     if (IsMaxQualityNotReached(item))
                     {
                         WinQuality(item);
                     }
                 }
-                if (item.SellIn < 6)
+                if (item.SellIn < OneWeek)
                 {
                     if (IsMaxQualityNotReached(item))
                     {
