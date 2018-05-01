@@ -42,10 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QualityControl\AgedBrieQuality.cs" />
+    <Compile Include="QualityControl\BackStagePassQuality.cs" />
+    <Compile Include="QualityControl\DefaultQuality.cs" />
     <Compile Include="GildedRose.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QualityControl\Quality.cs" />
+    <Compile Include="QualityControl\QualityFactory.cs" />
+    <Compile Include="SellInControl\SellIn.cs" />
+    <Compile Include="QualityControl\SulfurasQuality.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
